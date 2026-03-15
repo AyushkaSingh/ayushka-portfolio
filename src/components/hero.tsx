@@ -1,148 +1,86 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Code2, Database, LayoutTemplate, Terminal, LucideIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-
-const FloatingIcon = ({ icon: Icon, delay, className }: { icon: LucideIcon, delay: number, className: string }) => (
-  <motion.div
-    initial={{ y: 20, opacity: 0 }}
-    animate={{ y: [0, -20, 0], opacity: [0.5, 1, 0.5] }}
-    transition={{
-      y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay },
-      opacity: { duration: 4, repeat: Infinity, ease: "easeInOut", delay },
-    }}
-    className={`absolute hidden md:flex items-center justify-center w-16 h-16 rounded-2xl glass-card text-muted-foreground ${className}`}
-  >
-    <Icon className="w-8 h-8" />
-  </motion.div>
-);
-
-const TypeWriter = ({ words }: { words: string[] }) => {
-  const [index, setIndex] = useState(0);
-  const [subIndex, setSubIndex] = useState(0);
-  const [reverse, setReverse] = useState(false);
-
-  useEffect(() => {
-    if (subIndex === words[index].length + 1 && !reverse) {
-      setTimeout(() => setReverse(true), 2000);
-      return;
-    }
-
-    if (subIndex === 0 && reverse) {
-      setTimeout(() => {
-        setReverse(false);
-        setIndex((prev) => (prev + 1) % words.length);
-      }, 0);
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      setSubIndex((prev) => prev + (reverse ? -1 : 1));
-    }, Math.max(reverse ? 50 : 100, Math.random() * 150));
-
-    return () => clearTimeout(timeout);
-  }, [subIndex, index, reverse, words]);
-
-  return (
-    <span className="inline-block min-w-[20px]">
-      {words[index].substring(0, subIndex)}
-      <motion.span
-        animate={{ opacity: [1, 0] }}
-        transition={{ repeat: Infinity, duration: 0.8 }}
-        className="inline-block w-[3px] h-[1em] bg-primary ml-1 align-middle"
-      />
-    </span>
-  );
-};
+import { ArrowRight, Download } from "lucide-react";
+import { WebGLHero } from "@/components/webgl-hero";
 
 export function Hero() {
   const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
-  const y2 = useTransform(scrollY, [0, 1000], [0, -100]);
-  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+  const y2 = useTransform(scrollY, [0, 500], [0, 140]);
+  const opacity = useTransform(scrollY, [0, 420], [1, 0]);
 
   return (
-    <section id="hero" className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
-      
-      {/* Decorative Floating Elements */}
-      <FloatingIcon icon={Terminal} delay={0} className="top-1/4 left-[10%] -rotate-12" />
-      <FloatingIcon icon={Database} delay={1} className="bottom-1/3 left-[15%] rotate-12" />
-      <FloatingIcon icon={Code2} delay={2} className="top-1/3 right-[10%] rotate-6" />
-      <FloatingIcon icon={LayoutTemplate} delay={3} className="bottom-1/4 right-[15%] -rotate-6" />
+    <section id="hero" className="section-shell flex min-h-screen items-center justify-center overflow-hidden pt-28 sm:pt-32">
+      <WebGLHero />
 
-      <div className="container px-6 relative z-10 mx-auto text-center max-w-5xl">
-        <motion.div style={{ opacity, y: y2 }}>
+      <div className="section-container relative z-10 text-center pointer-events-none">
+        <motion.div style={{ opacity, y: y2 }} className="pointer-events-auto mx-auto max-w-5xl">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/30 text-primary text-sm font-medium mb-8 box-glow"
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-6 inline-flex max-w-full items-center gap-3 rounded-full border border-white/15 bg-white/8 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/80 shadow-[0_0_30px_rgba(139,92,246,0.2)] backdrop-blur-md sm:mb-8 sm:px-5 sm:py-2.5 sm:text-sm"
           >
-            <span className="relative flex h-3 w-3">
+            <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
             </span>
-            Available for new opportunities
+            Cloud, DevOps, and Full-Stack Craft
           </motion.div>
 
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter"
-          >
-            Hi, I&apos;m <span className="gradient-text font-serif italic pr-2">Ayushka</span>
-            <br className="hidden md:block" />
-            <span className="text-foreground/80">
-              I build <TypeWriter words={["scalable cloud infra", "modern web apps", "automated pipelines", "resilient systems"]} />
-            </span>
-          </motion.h1>
+          <motion.div className="mb-6 overflow-hidden sm:mb-8">
+            <motion.h1 
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="text-5xl font-black leading-[0.9] tracking-[-0.07em] text-glow-dark sm:text-6xl md:text-7xl lg:text-[7.5rem]"
+            >
+              <span className="block pr-0 text-foreground md:inline-block md:pr-4">Ayushka</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-fuchsia-500">Kumari</span>
+            </motion.h1>
+          </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto font-medium"
+            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="mx-auto mb-8 max-w-3xl text-base font-medium leading-7 text-muted-foreground sm:mb-10 sm:text-xl sm:leading-8 md:text-2xl"
           >
-            Cloud & DevOps Enthusiast | Software Developer building automated tools, scalable infrastructure, and modern applications.
+            Cloud and DevOps focused developer building automation-first tooling, container workflows, and reliable deployment systems.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6"
+            transition={{ duration: 1, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
           >
-            <a
-              href="#projects"
-              className="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-foreground px-8 font-medium text-background transition-all hover:scale-105 active:scale-95"
+            <button
+              onClick={() => {
+                const el = document.getElementById("about");
+                const lenisWindow = window as unknown as { lenis: unknown };
+                if (el && lenisWindow.lenis) {
+                  // @ts-expect-error - lenis is dynamically injected
+                  lenisWindow.lenis.scrollTo(el, { duration: 1.5 });
+                }
+              }}
+              className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-foreground px-6 text-sm font-semibold text-background transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(255,255,255,0.16)] active:scale-95 sm:h-14 sm:px-8 sm:text-base"
             >
-              <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
-                <div className="relative h-full w-8 bg-white/20" />
-              </div>
-              <span className="mr-2">View Projects</span>
+              <span className="mr-2">Enter Experience</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
-
+            </button>
             <a
-              href="/ayushka-cv.pdf"
-              target="_blank" 
+              href="/CV_AYU_FINAL.pdf"
+              target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full px-8 font-medium text-foreground glass border border-white/10 transition-all hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95"
+              className="glass inline-flex h-12 items-center justify-center rounded-full px-5 text-sm font-medium text-foreground/80 transition-all hover:-translate-y-0.5 hover:text-foreground sm:h-14 sm:px-6 sm:text-base"
             >
-              <span className="mr-2">Download CV</span>
-              <div className="h-2 w-2 rounded-full bg-primary transition-all group-hover:animate-ping" />
+              <Download className="mr-2 h-4 w-4" />
+              Open CV
             </a>
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Mouse parallax subtle overlay layer */}
-      <motion.div 
-        style={{ y: y1 }}
-        className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0)_0%,var(--background)_100%)] opacity-80"
-      />
     </section>
   );
 }

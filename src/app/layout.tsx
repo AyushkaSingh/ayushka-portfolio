@@ -18,10 +18,13 @@ export const metadata: Metadata = {
   description: "Portfolio of Ayushka Kumari, Software Developer & Cloud Enthusiast.",
 };
 
-import { Navbar } from "@/components/navbar";
 import { Background } from "@/components/background";
 import { CustomCursor } from "@/components/cursor";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { Navbar } from "@/components/navbar";
+
+import { SmoothScrollProvider } from "@/components/smooth-scroll";
+import { SceneNavigation } from "@/components/scene-navigation";
 
 export default function RootLayout({
   children,
@@ -31,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"
@@ -39,13 +42,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Background />
-          <ScrollProgress />
-          <CustomCursor />
-          <Navbar />
-          <main className="relative z-10 pt-24 min-h-screen">
-            {children}
-          </main>
+          <SmoothScrollProvider>
+            <Background />
+            <ScrollProgress />
+            <CustomCursor />
+            <SceneNavigation />
+            <Navbar />
+            <main className="relative z-10 min-h-screen overflow-x-clip">
+              {children}
+            </main>
+          </SmoothScrollProvider>
         </ThemeProvider>
       </body>
     </html>
