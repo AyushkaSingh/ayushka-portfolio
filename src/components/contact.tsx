@@ -51,7 +51,7 @@ export function Contact() {
                 Email Me
               </p>
               <p className="truncate text-lg font-bold text-gray-900 transition-colors group-hover:text-primary dark:text-foreground dark:group-hover:text-glow sm:text-2xl">
-                ayushkasingh@gmail.com
+                ayushkasingh63@gmail.com
               </p>
             </div>
           </motion.a>
