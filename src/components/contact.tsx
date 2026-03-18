@@ -67,7 +67,7 @@ export function Contact() {
         >
           {/* LinkedIn */}
           <a
-            href="https://linkedin.com/in/ayushka"
+            href="www.linkedin.com/in/ayushka-43859a289"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex h-12 w-full items-center justify-center rounded-full border border-gray-300 bg-gray-100 px-6 text-sm font-medium text-gray-800 transition-all hover:-translate-y-0.5 hover:border-[#0077b5] hover:bg-[#0077b5] hover:text-white dark:border-white/10 dark:bg-white/5 dark:text-foreground dark:hover:border-transparent dark:hover:bg-[#0077b5] sm:h-14 sm:w-auto sm:px-8 sm:text-base"
